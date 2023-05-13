@@ -1,0 +1,40 @@
+<h1 class="font-bold mb-2 text-center text-white text-lg">
+  {{ title | uppercase }}
+</h1>
+
+<input type="text" class="mb-2 border py-2 px-4 w-full" [(ngModel)]="term" />
+<!-- <app-product [product]="products[0]"> </app-product>
+<app-product [product]="products[1]"> </app-product> -->
+
+<!-- <app-product *ngFor="let product of products" [product]="product"> -->
+<!-- или -->
+<h1 class="text-center text-lg" *ngIf="loading">Loading...</h1>
+
+<!-- Так как мы поменяли на знак доллара, чуточку стилистка изменится -->
+<!-- <app-product
+  *ngFor="let product of products; let i = index"
+  [product]="product"
+>
+</app-product> -->
+
+<div *ngIf="productService.products">
+  <app-product
+    *ngFor="
+      let product of productService.products | filterProducts : term;
+      let i = index
+    "
+    [product]="product"
+  >
+  </app-product>
+</div>
+
+<app-modal *ngIf="modalService.isVisible$ | async" title="Create new Product">
+  <app-create-product></app-create-product>
+</app-modal>
+
+<button
+  class="rounded-full bg-red-700 text-white fixed right-5 bottom-5 py-2 px-4"
+  (click)="modalService.open()"
+>
+  Открыть модальное окно
+</button>
